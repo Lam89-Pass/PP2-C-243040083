@@ -2,27 +2,31 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-/**
- * Panel samping kiri
- */
 public class SidebarPanel extends JPanel {
+    private Main mainFrame;
 
-    public SidebarPanel() {
+    public SidebarPanel(Main mainFrame) {
         super(new BorderLayout());
+        this.mainFrame = mainFrame;
         setPreferredSize(new Dimension(UITheme.px(260), 100));
 
         add(new KalenderPanel(), BorderLayout.NORTH);
@@ -55,9 +59,33 @@ public class SidebarPanel extends JPanel {
         teks.add(garis);
         teks.add(Box.createVerticalStrut(UITheme.px(16)));
         teks.add(kutipan);
-        add(teks, BorderLayout.CENTER);
 
+        teks.add(Box.createVerticalStrut(UITheme.px(30)));
+        teks.add(buatTombolMenu("Isi Formulir", Glyph.DOC, e -> mainFrame.showCard("FORM")));
+        teks.add(Box.createVerticalStrut(UITheme.px(10)));
+        teks.add(buatTombolMenu("Pusat Bantuan", Glyph.STAR, e -> mainFrame.showCard("BANTUAN")));
+        teks.add(Box.createVerticalStrut(UITheme.px(10)));
+        teks.add(buatTombolMenu("Keluar Aplikasi", Glyph.PERSON, e -> mainFrame.keluarAplikasi()));
+
+        add(teks, BorderLayout.CENTER);
         add(new IlustrasiPanel(), BorderLayout.SOUTH);
+    }
+
+    private JButton buatTombolMenu(String label, Glyph icon, ActionListener action) {
+        JButton btn = new JButton(label);
+        btn.setIcon(new VectorIcon(icon, UITheme.px(20), Color.WHITE, UITheme.NAVY));
+        btn.setFont(UITheme.fnt(16, Font.BOLD));
+        btn.setForeground(Color.WHITE);
+        btn.setContentAreaFilled(false);
+        btn.setBorderPainted(false);
+        btn.setFocusPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setHorizontalAlignment(SwingConstants.LEFT);
+        btn.setIconTextGap(UITheme.px(12));
+        btn.setMargin(new Insets(0, 0, 0, 0));
+        btn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btn.addActionListener(action);
+        return btn;
     }
 
     @Override

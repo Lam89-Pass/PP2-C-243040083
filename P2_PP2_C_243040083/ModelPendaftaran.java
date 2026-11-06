@@ -5,22 +5,24 @@ public class ModelPendaftaran {
     private String nama;
     private String nim;
     private String email;
+    private int umur;
     private String universitas;
     private String programStudi;
     private String kegiatan;
-    private String modeKehadiran; 
-    private List<String> fasilitas; 
+    private String modeKehadiran;
+    private List<String> fasilitas;
     private String catatan;
 
     public ModelPendaftaran() {
         this.fasilitas = new ArrayList<>();
     }
 
-    public ModelPendaftaran(String nama, String nim, String email, String universitas, String programStudi,
-                            String kegiatan, String modeKehadiran, List<String> fasilitas, String catatan) {
+    public ModelPendaftaran(String nama, String nim, String email, int umur, String universitas, String programStudi,
+            String kegiatan, String modeKehadiran, List<String> fasilitas, String catatan) {
         this.nama = nama;
         this.nim = nim;
         this.email = email;
+        this.umur = umur;
         this.universitas = universitas;
         this.programStudi = programStudi;
         this.kegiatan = kegiatan;
@@ -51,6 +53,14 @@ public class ModelPendaftaran {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getUmur() {
+        return umur;
+    }
+
+    public void setUmur(int umur) {
+        this.umur = umur;
     }
 
     public String getUniversitas() {
@@ -105,15 +115,17 @@ public class ModelPendaftaran {
         String daftarFasilitas = (fasilitas == null || fasilitas.isEmpty()) ? "-" : String.join(", ", fasilitas);
         String txtCatatan = (catatan == null || catatan.trim().isEmpty()) ? "-" : catatan.trim();
 
-        return "Nama Lengkap    : " + (nama != null ? nama : "") + "\n"
-             + "NIM             : " + (nim != null ? nim : "") + "\n"
-             + "Email           : " + (email != null ? email : "") + "\n"
-             + "Universitas     : " + (universitas != null ? universitas : "") + "\n"
-             + "Program Studi   : " + (programStudi != null ? programStudi : "") + "\n"
-             + "Kegiatan        : " + (kegiatan != null ? kegiatan : "") + "\n"
-             + "Mode Kehadiran  : " + (modeKehadiran != null ? modeKehadiran : "") + "\n"
-             + "Fasilitas       : " + daftarFasilitas + "\n"
-             + "Catatan         : " + txtCatatan;
+        return "Nama Lengkap    : " + (nama != null && !nama.isEmpty() ? nama : "-") + "\n"
+                + "NIM             : " + (nim != null && !nim.isEmpty() ? nim : "-") + "\n"
+                + "Email           : " + (email != null && !email.isEmpty() ? email : "-") + "\n"
+                + "Umur            : " + umur + " Tahun\n"
+                + "Universitas     : " + (universitas != null && !universitas.isEmpty() ? universitas : "-") + "\n"
+                + "Program Studi   : " + (programStudi != null && !programStudi.isEmpty() ? programStudi : "-") + "\n"
+                + "Kegiatan        : " + (kegiatan != null && !kegiatan.isEmpty() ? kegiatan : "-") + "\n"
+                + "Mode Kehadiran  : " + (modeKehadiran != null && !modeKehadiran.isEmpty() ? modeKehadiran : "-")
+                + "\n"
+                + "Fasilitas       : " + daftarFasilitas + "\n"
+                + "Catatan         : " + txtCatatan;
     }
 
     @Override
@@ -122,6 +134,7 @@ public class ModelPendaftaran {
                 "nama='" + nama + '\'' +
                 ", nim='" + nim + '\'' +
                 ", email='" + email + '\'' +
+                ", umur=" + umur +
                 ", universitas='" + universitas + '\'' +
                 ", programStudi='" + programStudi + '\'' +
                 ", kegiatan='" + kegiatan + '\'' +

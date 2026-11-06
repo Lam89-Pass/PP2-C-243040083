@@ -10,9 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.KeyboardFocusManager;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -33,204 +30,117 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
-public class FormPendaftaran extends JFrame {
+public class FormPendaftaran extends JPanel {
 
     private static final String[] DAFTAR_UNIVERSITAS = {
-        "-- Pilih Perguruan Tinggi --",
-        "Institut Teknologi Bandung",
-        "Universitas Pasundan",
-        "Universitas Gadjah Mada",
-        "Universitas Indonesia",
-        "Telkom University",
-        "Universitas Padjadjaran",
-        "Universitas Pendidikan Indonesia",
-        "Bina Nusantara (BINUS University)",
-        "Universitas Komputer Indonesia",
-        "Universitas Islam Bandung",
-        "Universitas Airlangga",
-        "Institut Teknologi Sepuluh Nopember",
-        "Universitas Diponegoro",
-        "Universitas Brawijaya",
-        "Lainnya / Perguruan Tinggi Lain"
+            "-- Pilih Perguruan Tinggi --", "Institut Teknologi Bandung", "Universitas Pasundan",
+            "Universitas Gadjah Mada", "Universitas Indonesia", "Telkom University",
+            "Universitas Padjadjaran", "Universitas Pendidikan Indonesia", "Bina Nusantara (BINUS University)",
+            "Universitas Komputer Indonesia", "Universitas Islam Bandung", "Universitas Airlangga",
+            "Institut Teknologi Sepuluh Nopember", "Universitas Diponegoro", "Universitas Brawijaya", "Lainnya"
     };
 
     private static final String[] DAFTAR_PRODI = {
-        "-- Pilih Program Studi --",
-        // Fakultas Teknik
-        "Teknik Informatika",
-        "Teknik Industri",
-        "Teknik Mesin",
-        "Teknik Elektro",
-        "Teknik Sipil",
-        "Teknologi Pangan",
-        "Teknik Komputer",
-        "Teknik Nuklir",
-        "Teknik Kimia",
-
-        // Fakultas Lainnya
-        "Manajemen",
-        "Akuntansi",
-        "Ekonomi Pembangunan",
-        "Bisnis Digital",
-        "Pendidikan Guru SD - PGSD",
-        "Pendidikan Matematika",
-        "Pendidikan Bahasa Indonesia",
-        "Pendidikan Bahasa Inggris",
-        "Pendidikan Biologi",
-        "Pendidikan Ekonomi",
-        "Ilmu Komunikasi",
-        "Hubungan Internasional",
-        "Ilmu Hukum",
-        "Psikologi",
-        "Desain Komunikasi Visual"
+            "-- Pilih Program Studi --", "Teknik Informatika", "Teknik Industri", "Teknik Mesin",
+            "Teknik Elektro", "Teknik Sipil", "Teknologi Pangan", "Teknik Komputer", "Teknik Nuklir", "Teknik Kimia",
+            "Manajemen", "Akuntansi", "Ekonomi Pembangunan", "Bisnis Digital", "Pendidikan Guru SD - PGSD",
+            "Pendidikan Matematika", "Pendidikan Bahasa Indonesia", "Pendidikan Bahasa Inggris", "Pendidikan Biologi",
+            "Pendidikan Ekonomi", "Ilmu Komunikasi", "Hubungan Internasional", "Ilmu Hukum", "Psikologi",
+            "Desain Komunikasi Visual"
     };
 
     private static final String[] DAFTAR_KEGIATAN = {
-        // Teknologi
-        "Seminar Nasional: Tren AI & Generative Intelligence (Teknologi)",
-        "Workshop Java: Modern Software Architecture & Spring Boot (Teknologi)",
-        "Lomba Pemrograman & Algoritma Competitive Programming (Teknologi)",
-        "Workshop Cyber Security & Ethical Hacking (Teknologi)",
-        "Pelatihan Cloud Computing & Data Engineering (Teknologi)",
-
-        // Bisnis
-        "Seminar Bisnis: Strategi Scale-Up Startup & Digital Marketing (Bisnis)",
-        "Workshop Financial Planning & Investment bagi Gen-Z (Bisnis)",
-        "Lomba Business Plan & Pitching Competition (Bisnis)",
-        "Seminar Akuntansi Forensik & Tata Kelola Keuangan Digital (Bisnis)",
-
-        // Keguruan & Edukasi
-        "Seminar Nasional Inovasi Model Pembelajaran Abad 21 (Keguruan)",
-        "Workshop Implementasi Kurikulum Merdeka & Gamifikasi Edukasi (Keguruan)",
-        "Pelatihan Pembuatan Media Pembelajaran Interaktif Berbasis AI (Keguruan)",
-        "Seminar Psikologi Pendidikan & Karakter Generasi Emas (Keguruan)"
+            "-- Pilih Kegiatan --",
+            "Seminar Nasional: Tren AI & Generative Intelligence (Teknologi)",
+            "Workshop Java: Modern Software Architecture & Spring Boot (Teknologi)",
+            "Lomba Pemrograman & Algoritma Competitive Programming (Teknologi)",
+            "Workshop Cyber Security & Ethical Hacking (Teknologi)",
+            "Pelatihan Cloud Computing & Data Engineering (Teknologi)",
+            "Seminar Bisnis: Strategi Scale-Up Startup & Digital Marketing (Bisnis)",
+            "Workshop Financial Planning & Investment bagi Gen-Z (Bisnis)",
+            "Lomba Business Plan & Pitching Competition (Bisnis)",
+            "Seminar Akuntansi Forensik & Tata Kelola Keuangan Digital (Bisnis)",
+            "Seminar Nasional Inovasi Model Pembelajaran Abad 21 (Keguruan)",
+            "Workshop Implementasi Kurikulum Merdeka & Gamifikasi Edukasi (Keguruan)",
+            "Pelatihan Pembuatan Media Pembelajaran Interaktif Berbasis AI (Keguruan)",
+            "Seminar Psikologi Pendidikan & Karakter Generasi Emas (Keguruan)"
     };
 
     private RoundedTextField txtNama;
     private RoundedTextField txtNim;
     private RoundedTextField txtEmail;
+    private RoundedTextField txtUmur;
     private JComboBox<String> cmbUniversitas;
     private JComboBox<String> cmbProdi;
     private JComboBox<String> cmbKegiatan;
-    private JRadioButton rbOnline;
-    private JRadioButton rbOffline;
+    private JRadioButton rbOnline, rbOffline;
     private ButtonGroup groupMode;
-    private JCheckBox chkKonsumsi;
-    private JCheckBox chkSertifikat;
-    private JCheckBox chkMateri;
-    private JCheckBox chkMerchandise;
-    private JCheckBox chkRekaman;
-    private JCheckBox chkDoorprize;
+    private JCheckBox chkKonsumsi, chkSertifikat, chkMateri, chkMerchandise, chkRekaman, chkDoorprize;
     private PlaceholderTextArea txtCatatan;
-    private RoundedButton btnDaftar;
-    private RoundedButton btnReset;
+    private RoundedButton btnLanjutkan, btnReset;
 
-    private final Timer timerResize;
+    private boolean isDirty = false;
+    private final Main mainFrame;
     private final PendaftaranController controller;
 
-    public FormPendaftaran() {
-        super("Formulir Pendaftaran Kegiatan");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public FormPendaftaran(Main mainFrame) {
+        this.mainFrame = mainFrame;
+        this.controller = new PendaftaranController(this, mainFrame);
 
-        this.controller = new PendaftaranController(this);
+        setLayout(new BorderLayout());
+        add(buatPanelKonten(), BorderLayout.CENTER);
 
-        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = Math.min(layar.width, Math.max(1150, (int) (layar.width * 0.60)));
-        int h = Math.min(layar.height, Math.max(820, (int) (layar.height * 0.80)));
-        UITheme.setSkala(UITheme.hitungSkala(w, h));
+        setupDirtyStateTracker();
+    }
 
-        initComponents();
-        setSize(w, h);
-        setMinimumSize(new Dimension(1050, 750));
-        setLocationRelativeTo(null);
-
-        timerResize = new Timer(150, e -> sesuaikanSkala());
-        timerResize.setRepeats(false);
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                timerResize.restart();
+    private void setupDirtyStateTracker() {
+        DocumentListener dl = new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                setDirty(true);
             }
-        });
-    }
 
-    private void initComponents() {
-        JPanel root = new JPanel(new BorderLayout());
-        root.add(new SidebarPanel(), BorderLayout.WEST);
-        root.add(buatPanelKonten(), BorderLayout.CENTER);
-        setContentPane(root);
-        getRootPane().setDefaultButton(btnDaftar);
-    }
+            public void removeUpdate(DocumentEvent e) {
+                setDirty(true);
+            }
 
-    private Component[] daftarKomponen() {
-        return new Component[] {
-            txtNama, txtNim, txtEmail, cmbUniversitas, cmbProdi,
-            cmbKegiatan, rbOnline, rbOffline,
-            chkKonsumsi, chkSertifikat, chkMateri, chkMerchandise, chkRekaman, chkDoorprize,
-            txtCatatan, btnDaftar, btnReset
+            public void changedUpdate(DocumentEvent e) {
+                setDirty(true);
+            }
         };
+        txtNama.getDocument().addDocumentListener(dl);
+        txtNim.getDocument().addDocumentListener(dl);
+        txtEmail.getDocument().addDocumentListener(dl);
+        txtUmur.getDocument().addDocumentListener(dl);
+        txtCatatan.getDocument().addDocumentListener(dl);
+
+        ActionListener al = e -> setDirty(true);
+        cmbUniversitas.addActionListener(al);
+        cmbProdi.addActionListener(al);
+        cmbKegiatan.addActionListener(al);
+        rbOnline.addActionListener(al);
+        rbOffline.addActionListener(al);
+        chkKonsumsi.addActionListener(al);
+        chkSertifikat.addActionListener(al);
+        chkMateri.addActionListener(al);
+        chkMerchandise.addActionListener(al);
+        chkRekaman.addActionListener(al);
+        chkDoorprize.addActionListener(al);
     }
 
-    private void sesuaikanSkala() {
-        float baru = UITheme.hitungSkala(getWidth(), getHeight());
-        if (baru == UITheme.getSkala()) {
-            return;
-        }
-
-        ModelPendaftaran dataSementara = ambilDataForm();
-        int idxUniv = cmbUniversitas.getSelectedIndex();
-        int idxProdi = cmbProdi.getSelectedIndex();
-        int idxKegiatan = cmbKegiatan.getSelectedIndex();
-
-        Component fokusLama = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-        int idxFokus = -1;
-        Component[] lama = daftarKomponen();
-        for (int i = 0; i < lama.length; i++) {
-            if (lama[i] == fokusLama) {
-                idxFokus = i;
-                break;
-            }
-        }
-
-        UITheme.setSkala(baru);
-        initComponents();
-
-        txtNama.setText(dataSementara.getNama());
-        txtNim.setText(dataSementara.getNim());
-        txtEmail.setText(dataSementara.getEmail());
-        cmbUniversitas.setSelectedIndex(idxUniv);
-        cmbProdi.setSelectedIndex(idxProdi);
-        cmbKegiatan.setSelectedIndex(idxKegiatan);
-        txtCatatan.setText(dataSementara.getCatatan());
-
-        boolean online = "Online".equalsIgnoreCase(dataSementara.getModeKehadiran());
-        rbOnline.setSelected(online);
-        rbOffline.setSelected(!online);
-
-        List<String> fasilitas = dataSementara.getFasilitas();
-        chkKonsumsi.setSelected(fasilitas.contains("Konsumsi"));
-        chkSertifikat.setSelected(fasilitas.contains("Sertifikat"));
-        chkMateri.setSelected(fasilitas.contains("Materi Digital"));
-        chkMerchandise.setSelected(fasilitas.contains("Merchandise"));
-        chkRekaman.setSelected(fasilitas.contains("Akses Rekaman Video"));
-        chkDoorprize.setSelected(fasilitas.contains("Kupon Doorprize"));
-
-        revalidate();
-        repaint();
-
-        if (idxFokus >= 0) {
-            final Component target = daftarKomponen()[idxFokus];
-            SwingUtilities.invokeLater(() -> target.requestFocusInWindow());
-        }
+    public boolean hasUnsavedChanges() {
+        return isDirty;
     }
 
-    // Panel Konten (Area Kanan)
+    public void setDirty(boolean dirty) {
+        this.isDirty = dirty;
+    }
+
     private JPanel buatPanelKonten() {
         GradientPanel konten = new GradientPanel(new BorderLayout(0, UITheme.px(10)));
         konten.setBorder(new EmptyBorder(UITheme.px(14), UITheme.px(18), UITheme.px(12), UITheme.px(18)));
@@ -243,13 +153,16 @@ public class FormPendaftaran extends JFrame {
         g.fill = GridBagConstraints.BOTH;
         g.insets = new Insets(0, 0, UITheme.px(10), 0);
 
-        g.gridy = 0; g.weighty = 0;
+        g.gridy = 0;
+        g.weighty = 0;
         isi.add(buatPanelIdentitas(), g);
 
-        g.gridy = 1; g.weighty = 0;
+        g.gridy = 1;
+        g.weighty = 0;
         isi.add(buatPanelKegiatan(), g);
 
-        g.gridy = 2; g.weighty = 1.0;
+        g.gridy = 2;
+        g.weighty = 1.0;
         g.insets = new Insets(0, 0, 0, 0);
         isi.add(buatPanelCatatan(), g);
 
@@ -265,14 +178,16 @@ public class FormPendaftaran extends JFrame {
         txtNama = new RoundedTextField("Masukkan nama lengkap...");
         txtNim = new RoundedTextField("Masukkan NIM...");
         txtEmail = new RoundedTextField("Masukkan email aktif...");
+        txtUmur = new RoundedTextField("Masukkan umur (15-100)...");
         cmbUniversitas = buatComboBox(DAFTAR_UNIVERSITAS);
         cmbProdi = buatComboBox(DAFTAR_PRODI);
 
         tambahBaris(p, 0, buatLabel(Glyph.PERSON, "Nama Lengkap :", KeyEvent.VK_N, txtNama), txtNama);
         tambahBaris(p, 1, buatLabel(Glyph.ID, "NIM :", KeyEvent.VK_I, txtNim), txtNim);
         tambahBaris(p, 2, buatLabel(Glyph.MAIL, "Email :", KeyEvent.VK_E, txtEmail), txtEmail);
-        tambahBaris(p, 3, buatLabel(Glyph.BUILDING, "Universitas :", KeyEvent.VK_U, cmbUniversitas), cmbUniversitas);
-        tambahBaris(p, 4, buatLabel(Glyph.BOOK, "Program Studi :", KeyEvent.VK_P, cmbProdi), cmbProdi);
+        tambahBaris(p, 3, buatLabel(Glyph.CLOCK, "Umur :", KeyEvent.VK_U, txtUmur), txtUmur);
+        tambahBaris(p, 4, buatLabel(Glyph.BUILDING, "Universitas :", KeyEvent.VK_V, cmbUniversitas), cmbUniversitas);
+        tambahBaris(p, 5, buatLabel(Glyph.BOOK, "Program Studi :", KeyEvent.VK_P, cmbProdi), cmbProdi);
         return p;
     }
 
@@ -282,7 +197,6 @@ public class FormPendaftaran extends JFrame {
 
         cmbKegiatan = buatComboBox(DAFTAR_KEGIATAN);
 
-        // Mode kehadiran
         rbOnline = buatRadio("Online", true);
         rbOffline = buatRadio("Offline", false);
         groupMode = new ButtonGroup();
@@ -295,7 +209,6 @@ public class FormPendaftaran extends JFrame {
         panelRadio.add(Box.createHorizontalStrut(UITheme.px(28)));
         panelRadio.add(rbOffline);
 
-        // Fasilitas tambahan
         chkKonsumsi = buatCheck("Konsumsi");
         chkSertifikat = buatCheck("Sertifikat");
         chkMateri = buatCheck("Materi Digital");
@@ -350,15 +263,15 @@ public class FormPendaftaran extends JFrame {
         slogan.setForeground(UITheme.TEXT_DARK);
         slogan.setIconTextGap(UITheme.px(12));
 
-        btnDaftar = new RoundedButton("Daftar", Glyph.SEND, true);
+        btnLanjutkan = new RoundedButton("Lanjutkan", Glyph.SEND, true);
         btnReset = new RoundedButton("Reset", Glyph.REFRESH, false);
 
-        btnDaftar.addActionListener(e -> controller.handleDaftar());
+        btnLanjutkan.addActionListener(e -> controller.handleLanjutkan());
         btnReset.addActionListener(e -> controller.handleReset());
 
         JPanel tombol = new JPanel(new FlowLayout(FlowLayout.RIGHT, UITheme.px(12), 0));
         tombol.setOpaque(false);
-        tombol.add(btnDaftar);
+        tombol.add(btnLanjutkan);
         tombol.add(btnReset);
 
         JPanel bawah = new JPanel(new BorderLayout(UITheme.px(12), 0));
@@ -371,35 +284,40 @@ public class FormPendaftaran extends JFrame {
 
     public ModelPendaftaran ambilDataForm() {
         List<String> fasilitas = new ArrayList<>();
-        if (chkKonsumsi.isSelected()) fasilitas.add("Konsumsi");
-        if (chkSertifikat.isSelected()) fasilitas.add("Sertifikat");
-        if (chkMateri.isSelected()) fasilitas.add("Materi Digital");
-        if (chkMerchandise.isSelected()) fasilitas.add("Merchandise");
-        if (chkRekaman.isSelected()) fasilitas.add("Akses Rekaman Video");
-        if (chkDoorprize.isSelected()) fasilitas.add("Kupon Doorprize");
+        if (chkKonsumsi.isSelected())
+            fasilitas.add("Konsumsi");
+        if (chkSertifikat.isSelected())
+            fasilitas.add("Sertifikat");
+        if (chkMateri.isSelected())
+            fasilitas.add("Materi Digital");
+        if (chkMerchandise.isSelected())
+            fasilitas.add("Merchandise");
+        if (chkRekaman.isSelected())
+            fasilitas.add("Akses Rekaman Video");
+        if (chkDoorprize.isSelected())
+            fasilitas.add("Kupon Doorprize");
 
         String univ = cmbUniversitas.getSelectedItem() != null ? cmbUniversitas.getSelectedItem().toString() : "";
         String prodi = cmbProdi.getSelectedItem() != null ? cmbProdi.getSelectedItem().toString() : "";
         String kegiatan = cmbKegiatan.getSelectedItem() != null ? cmbKegiatan.getSelectedItem().toString() : "";
         String mode = rbOnline.isSelected() ? "Online" : "Offline";
 
+        int umur = 0;
+        try {
+            umur = Integer.parseInt(txtUmur.getText().trim());
+        } catch (NumberFormatException ignored) {
+        }
+
         return new ModelPendaftaran(
-            txtNama.getText(),
-            txtNim.getText(),
-            txtEmail.getText(),
-            univ,
-            prodi,
-            kegiatan,
-            mode,
-            fasilitas,
-            txtCatatan.getText()
-        );
+                txtNama.getText(), txtNim.getText(), txtEmail.getText(), umur,
+                univ, prodi, kegiatan, mode, fasilitas, txtCatatan.getText());
     }
 
     public void resetForm() {
         txtNama.setText("");
         txtNim.setText("");
         txtEmail.setText("");
+        txtUmur.setText("");
         cmbUniversitas.setSelectedIndex(0);
         cmbProdi.setSelectedIndex(0);
         cmbKegiatan.setSelectedIndex(0);
@@ -414,23 +332,33 @@ public class FormPendaftaran extends JFrame {
         txtNama.requestFocusInWindow();
     }
 
-    public RoundedTextField getTxtNama() { return txtNama; }
-    public RoundedTextField getTxtNim() { return txtNim; }
-    public RoundedTextField getTxtEmail() { return txtEmail; }
-    public JComboBox<String> getCmbUniversitas() { return cmbUniversitas; }
-    public JComboBox<String> getCmbProdi() { return cmbProdi; }
-    public JComboBox<String> getCmbKegiatan() { return cmbKegiatan; }
-    public JRadioButton getRbOnline() { return rbOnline; }
-    public JRadioButton getRbOffline() { return rbOffline; }
-    public JCheckBox getChkKonsumsi() { return chkKonsumsi; }
-    public JCheckBox getChkSertifikat() { return chkSertifikat; }
-    public JCheckBox getChkMateri() { return chkMateri; }
-    public JCheckBox getChkMerchandise() { return chkMerchandise; }
-    public JCheckBox getChkRekaman() { return chkRekaman; }
-    public JCheckBox getChkDoorprize() { return chkDoorprize; }
-    public PlaceholderTextArea getTxtCatatan() { return txtCatatan; }
-    public RoundedButton getBtnDaftar() { return btnDaftar; }
-    public RoundedButton getBtnReset() { return btnReset; }
+    public RoundedTextField getTxtNama() {
+        return txtNama;
+    }
+
+    public RoundedTextField getTxtNim() {
+        return txtNim;
+    }
+
+    public RoundedTextField getTxtEmail() {
+        return txtEmail;
+    }
+
+    public RoundedTextField getTxtUmur() {
+        return txtUmur;
+    }
+
+    public JComboBox<String> getCmbUniversitas() {
+        return cmbUniversitas;
+    }
+
+    public JComboBox<String> getCmbProdi() {
+        return cmbProdi;
+    }
+
+    public JComboBox<String> getCmbKegiatan() {
+        return cmbKegiatan;
+    }
 
     private JComboBox<String> buatComboBox(String[] data) {
         JComboBox<String> cmb = new JComboBox<>(data);
@@ -456,8 +384,8 @@ public class FormPendaftaran extends JFrame {
         cmb.setBorder(new LineBorder(UITheme.BORDER_BLUE, 1, true));
         cmb.setRenderer(new DefaultListCellRenderer() {
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                    boolean selected, boolean fokus) {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean selected,
+                    boolean fokus) {
                 JLabel l = (JLabel) super.getListCellRendererComponent(list, value, index, selected, fokus);
                 l.setBorder(new EmptyBorder(UITheme.px(4), UITheme.px(10), UITheme.px(4), UITheme.px(10)));
                 l.setFont(UITheme.fnt(15, Font.PLAIN));
@@ -474,7 +402,8 @@ public class FormPendaftaran extends JFrame {
     }
 
     private JLabel buatLabel(Glyph glyph, String teks, int mnemonic, Component target) {
-        JLabel l = new JLabel(teks, new VectorIcon(glyph, UITheme.px(24), UITheme.BLUE, Color.WHITE), SwingConstants.LEFT);
+        JLabel l = new JLabel(teks, new VectorIcon(glyph, UITheme.px(24), UITheme.BLUE, Color.WHITE),
+                SwingConstants.LEFT);
         l.setFont(UITheme.fnt(15, Font.PLAIN));
         l.setForeground(UITheme.TEXT_DARK);
         l.setIconTextGap(UITheme.px(12));
@@ -489,11 +418,13 @@ public class FormPendaftaran extends JFrame {
         c.gridy = baris;
         c.insets = new Insets(UITheme.px(4), UITheme.px(4), UITheme.px(4), UITheme.px(10));
         c.anchor = GridBagConstraints.WEST;
-
-        c.gridx = 0; c.weightx = 0; c.fill = GridBagConstraints.NONE;
+        c.gridx = 0;
+        c.weightx = 0;
+        c.fill = GridBagConstraints.NONE;
         p.add(label, c);
-
-        c.gridx = 1; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(UITheme.px(4), 0, UITheme.px(4), UITheme.px(4));
         p.add(input, c);
     }
