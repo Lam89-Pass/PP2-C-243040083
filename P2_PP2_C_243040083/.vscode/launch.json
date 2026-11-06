@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "P2_PP2_C_243040083_287e88cf"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "P1_PP2_C_243040083_d7d4aace"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "P1_PP1_C_243040083_e951a44d"
+        },
+        {
+            "type": "java",
+            "name": "Run Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "P1_PP1_C_243040083"
+        }
+    ]
+}
