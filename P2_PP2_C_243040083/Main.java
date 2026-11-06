@@ -13,7 +13,7 @@ public class Main extends JFrame {
     private MacTitleBar titleBar;
 
     public Main() {
-        super("Aplikasi Pendaftaran Kegiatan - PrakWeb & PBO");
+        super("Aplikasi Pendaftaran Kegiatan");
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -134,7 +134,8 @@ public class Main extends JFrame {
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (resizeDir == 0 || startPt == null || startBnds == null || isMaximized()) return;
+                if (resizeDir == 0 || startPt == null || startBnds == null || isMaximized())
+                    return;
                 Point curr = e.getLocationOnScreen();
                 int dx = curr.x - startPt.x;
                 int dy = curr.y - startPt.y;
@@ -209,8 +210,7 @@ public class Main extends JFrame {
                     "Konfirmasi Keluar",
                     "Formulir belum disubmit atau disimpan.\nApakah Anda yakin ingin keluar dan membuang data isian?",
                     "Keluar",
-                    "Batal"
-            );
+                    "Batal");
             if (!konfirmasi) {
                 return;
             }

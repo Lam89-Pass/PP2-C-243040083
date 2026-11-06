@@ -72,28 +72,18 @@ public class MacTitleBar extends JPanel {
         btnMinimize.addMouseListener(hoverAdapter);
         btnMaximize.addMouseListener(hoverAdapter);
 
-        JPanel pnlTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, UITheme.px(8), UITheme.px(12)));
+        JPanel pnlTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, UITheme.px(12)));
         pnlTitle.setOpaque(false);
 
         JLabel lblTitle = new JLabel("Aplikasi Pendaftaran Kegiatan");
         lblTitle.setFont(UITheme.fnt(14, Font.BOLD));
         lblTitle.setForeground(Color.WHITE);
 
-        JLabel lblSep = new JLabel("•");
-        lblSep.setFont(UITheme.fnt(12, Font.PLAIN));
-        lblSep.setForeground(new Color(0x7A, 0xA1, 0xDF));
-
-        JLabel lblSub = new JLabel("Praktikum Web & PBO");
-        lblSub.setFont(UITheme.fnt(13, Font.PLAIN));
-        lblSub.setForeground(new Color(0xB8, 0xD2, 0xF8));
-
         pnlTitle.add(lblTitle);
-        pnlTitle.add(lblSep);
-        pnlTitle.add(lblSub);
 
         JPanel pnlRightSpacer = new JPanel();
         pnlRightSpacer.setOpaque(false);
-        pnlRightSpacer.setPreferredSize(new Dimension(UITheme.px(90), UITheme.px(30)));
+        pnlRightSpacer.setPreferredSize(new Dimension(UITheme.px(80), UITheme.px(30)));
 
         add(pnlTraffic, BorderLayout.WEST);
         add(pnlTitle, BorderLayout.CENTER);

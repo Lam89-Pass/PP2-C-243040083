@@ -1,7 +1,6 @@
 # 📋 Sistem Pendaftaran Kegiatan & E-Tiket
 
 > **Tugas Praktikum 2 — Pemrograman Lanjutan II (PP II)**  
-> Kode Tugas: `P2_PP2_C_243040083`  
 > Program Studi: Teknik Informatika — Universitas Pasundan  
 
 Aplikasi desktop **Sistem Pendaftaran Kegiatan & Penerbitan E-Tiket** berbasis Java Swing dengan arsitektur **Model-View-Controller (MVC)**, antarmuka modern bergaya **macOS Window**, sistem navigasi multi-halaman (**CardLayout**), pelacak perubahan data (**Dirty State Tracker**), serta fitur ekspor **E-Tiket grafis beresolusi tinggi (PNG)**.
